@@ -1,5 +1,6 @@
 import httplib2
 import time
+import msvcrt
 
 class OdlUtil:
     url = ''
@@ -72,38 +73,45 @@ class OdlUtil:
 	#s4liubiao from:s4 to:ip:10.0.0.4 fadao h4
 		s4liubiao9='{"flow": [{"id": "9","match": {"in-port": "3","ethernet-match": {"ethernet-type": {"type": "0x0800"}},"ipv4-source": "10.0.0.1/32","ipv4-destination": "10.0.0.4/32"},"instructions": {"instruction": [{"order": "0","apply-actions":{"action": [{"order": "0","output-action": {"output-node-connector": "6"}}]}}]},"flow-name": "s4froms3toh4","priority": "1000","cookie": "0x0001","table_id": "0"}]}'
 
-
     	headers = {'Content-type': 'application/json'}
-	num=0
-	while num < 10 :
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:group/1', body=s1zubiao4, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
-			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/1', body=s4zubiao1, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/10', body=s4liubiao10, method='PUT',headers=headers)
-			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/2', body=s4zubiao2, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/11', body=s4liubiao11, method='PUT',headers=headers)
-			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/3', body=s4zubiao3, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/12', body=s4liubiao12, method='PUT',headers=headers)              
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:2/flow-node-inventory:table/0/flow/1', body=s2deliubiao, method='PUT',headers=headers)
-			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:2/flow-node-inventory:table/0/flow/2', body=s2deliubiao1, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:3/flow-node-inventory:table/0/flow/1', body=s3deliubiao, method='PUT',headers=headers)
-			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:3/flow-node-inventory:table/0/flow/2', body=s3deliubiao1, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/1', body=s4liubiao, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/2', body=s4liubiao2, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/3', body=s4liubiao3, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/4', body=s4liubiao4, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/5', body=s4liubiao5, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/6', body=s4liubiao6, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/7', body=s4liubiao7, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/8', body=s4liubiao8, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/9', body=s4liubiao9, method='PUT',headers=headers)
+
+        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:group/1', body=s1zubiao4, method='PUT',headers=headers)
+        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
+		response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/1', body=s4zubiao1, method='PUT',headers=headers)
+        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/10', body=s4liubiao10, method='PUT',headers=headers)
+		response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/2', body=s4zubiao2, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/11', body=s4liubiao11, method='PUT',headers=headers)
+		response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:group/3', body=s4zubiao3, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/12', body=s4liubiao12, method='PUT',headers=headers)              
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:2/flow-node-inventory:table/0/flow/1', body=s2deliubiao, method='PUT',headers=headers)
+		response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:2/flow-node-inventory:table/0/flow/2', body=s2deliubiao1, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:3/flow-node-inventory:table/0/flow/1', body=s3deliubiao, method='PUT',headers=headers)
+		response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:3/flow-node-inventory:table/0/flow/2', body=s3deliubiao1, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/1', body=s4liubiao, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/2', body=s4liubiao2, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/3', body=s4liubiao3, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/4', body=s4liubiao4, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/5', body=s4liubiao5, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/6', body=s4liubiao6, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/7', body=s4liubiao7, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/8', body=s4liubiao8, method='PUT',headers=headers)
+       	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:4/flow-node-inventory:table/0/flow/9', body=s4liubiao9, method='PUT',headers=headers)
+	def loadbalance():
+		print('press D to stop ..')
+		while (1):
+			if ord(msvcrt.getch()) in [68, 100]:
+				break;
+			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:group/1', body=s1zubiao4, method='PUT',headers=headers)
+	        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
 			time.sleep(0.1)
 			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:group/1', body=s1zubiao2, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
+	        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
 			time.sleep(0.1)
 			response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:group/1', body=s1zubiao3, method='PUT',headers=headers)
-        	response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
+	        response, content = http.request(uri='http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/flow-node-inventory:table/0/flow/1', body=s1liubiao, method='PUT',headers=headers)
 			time.sleep(0.1)
-			num=num + 1
+
+
 odl = OdlUtil('127.0.0.1', '8181')
 odl.install_flow()
+odl.loadbalance()
